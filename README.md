@@ -1,2 +1,2 @@
-# strin-drills
+# string-drills
 Practice using strings with js
