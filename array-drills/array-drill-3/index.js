@@ -3,6 +3,7 @@ function accessFirstItem(array) {
 }
 
 function accessThirdItem(array) {
+    return array[2];
 }
 
 
