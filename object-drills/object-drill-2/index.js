@@ -1,5 +1,10 @@
 function updateObject(obj) {
-    // your code here
+    var object = obj;
+    object.foo = 'foo';
+    object.bar = 'bar';
+    object.bizz = 'bizz';
+    object.bang = 'bang';
+    return object;
 }
 
 
