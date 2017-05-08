@@ -4,7 +4,9 @@ function personMaker() {
         lastName: 'Jones',
         // replace `null` with a function that uses self reference to return
         // full name
-        fullName: null
+        fullName: function(){
+           return this.firstName + " " + this.lastName;
+        }
     };
     return person;
 }
