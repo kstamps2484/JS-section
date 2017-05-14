@@ -1,19 +1,16 @@
-function makeToDos(owner, toDos) {
-    return {
-        owner: owner,
-        toDos: toDos,
-        generateHtml: function() {
-            var string = '<ul>';
-            this.toDos.forEach(function(todo){
-                string += '<li>'+ todo +'</li>';
-            });
-            return string + '</ul>';
-        }
-    }
+function makeStudentsReport(data) {
+    // var list = [];
+    // Object.keys(data).forEach(function(key){
+    //   list.push(data[key].name + ': ' + data[key].grade);
+    // });
+    // return list;
+    return data.map(function(student){
+        return student.name + ": " + student.grade;
+    });
 }
 
 
-/* From here down, you are not expected to
+/* From here down, you are not expected to 
  understand.... for now :)
 
  Nothing to see here!
@@ -24,59 +21,45 @@ function makeToDos(owner, toDos) {
 // tests
 
 function testIt() {
-    var toDos = ['get milk', 'walk dog', 'pay bills', 'eat dinner'];
-    var owner = 'Steve';
-    var myToDos = makeToDos(owner, toDos);
-    if (!myToDos || !myToDos instanceof Object) {
-        console.error('FAILURE: `makeToDos` must return an object');
-        return;
-    }
 
-    var expectedKeys = ['owner', 'toDos', 'generateHtml'];
-    if (
-        Object.keys(myToDos).length !== expectedKeys.length ||
-        !expectedKeys.every(function(key) {
-            return key in myToDos;
-        })
-    ) {
+    var testData = [
+        {name: 'Jane Doe', grade: 'A'},
+        {name: 'John Dough', grade: 'B'},
+        {name: 'Jill Do', grade: 'A'}
+    ];
+
+    var expectations = [
+        'Jane Doe: A',
+        'John Dough: B',
+        'Jill Do: A'
+    ];
+
+    var results = makeStudentsReport(testData);
+
+    if (!(results && results instanceof Array)) {
         console.error(
-            'FAILURE: expected `makeToDos` to have a `.toDos` property ' +
-            'whose value is an array of todo items');
-        return;
-    }
-
-    if (myToDos.owner !== owner) {
-        console.error(
-            'FAILURE: expected `makeToDos` to return an object with `.owner` '+
-            'set to value passed in for `owner`, in this case ' + owner);
-        return;
-    }
-    if (!toDos.every(function(toDo) {
-            return myToDos.toDos.find(function(_toDo) {
-                return _toDo === toDo;
-            })
-        })) {
-        console.error('FAILURE: makeToDos toDos property returned' + Object.values(myToDos.toDos) + '. Expected: ' + Object.values(todos));
-    }
-
-    var element = $(myToDos.generateHtml());
-
-    if (element.length !== 1) {
-        console.error(
-            'FAILURE: `makeToDos` must return an object with a `generateHtml` ' +
-            'method that returns an unordered list');
-        return;
-    }
-
-    if (!toDos.every(function(toDo) {
-            return element.find('li:contains("' + toDo + '")').length === 1;
-        })) {
-        console.error('FAILURE: generateHtml must return li element for every todo');
+            'FAILURE: `makeStudentsReport` must return an array');
         return
     }
-
-    console.log('SUCCESS: `makeToDos` is working');
-
+    if (results.length !== testData.length) {
+        console.error(
+            'FAILURE: test data had length of ' + testData.length +
+            ' but `makeStudentsReport` returned array of length ' + results.length);
+        return
+    }
+    for (var i=0; i < expectations.length; i++) {
+        var expect = expectations[i];
+        if (!results.find(function(item) {
+                return item === expect;
+            })) {
+            console.error(
+                'FAILURE: `makeStudentsReport` is not ' +
+                'producing expected strings'
+            );
+            return
+        }
+    }
+    console.log('SUCCESS: `makeStudentsReport` is working');
 }
 
 testIt();
